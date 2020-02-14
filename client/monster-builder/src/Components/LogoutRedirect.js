@@ -5,6 +5,7 @@ import { withRouter } from 'react-router-dom'
 const LogoutRedirect = (props) => {
     useEffect(() => {
         props.handleLogout()
+        localStorage.removeItem('jsonwebtoken')
         props.history.push('/login')
     })
 
