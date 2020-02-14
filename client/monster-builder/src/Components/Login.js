@@ -12,6 +12,19 @@ const Login = () => {
         })
     }
 
+    function handleLogin() {
+        console.log("Logging in...")
+        fetch('http://localhost:8080/login', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify({
+                username: user.username,
+                password: user.password
+            })
+        })
+    }
     return (
         <div>
             <h1>Login</h1>
@@ -19,7 +32,7 @@ const Login = () => {
             <input onChange={handleInput} type="text" name="username" />
             <label>Password</label>
             <input onChange={handleInput} type="text" name="password" />
-            <button>Login</button>
+            <button onClick={handleLogin}>Login</button>
         </div>
     )
 }
