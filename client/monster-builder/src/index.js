@@ -1,17 +1,30 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 import './index.css';
+import BaseLayout from './Components/BaseLayout/BaseLayout'
 import App from './App';
 import * as serviceWorker from './serviceWorker';
+import {BrowserRouter, Route, Switch} from 'react-router-dom';
 import reducer from './store/reducer'
 import { createStore } from 'redux'
 import { Provider } from 'react-redux'
+import Login from './Components/Login'
+import Register from './Components/Register'
+
 
 const store = createStore(reducer, window.__REDUX_DEVTOOLS_EXTENSION__ && window.__REDUX_DEVTOOLS_EXTENSION__())
 
 ReactDOM.render(
 <Provider store={store}>
-    <App />
+    <BrowserRouter>
+        <BaseLayout>
+            <Switch>
+                <Route exact path="/" component = {App} />
+                <Route path="/register" component = {Register} />
+                <Route path="/login" component = {Login} />
+            </Switch>
+        </BaseLayout>
+    </BrowserRouter>
 </Provider>, 
 document.getElementById('root'));
 
