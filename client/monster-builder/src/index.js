@@ -9,6 +9,7 @@ import reducer from './store/reducer'
 import { createStore } from 'redux'
 import { Provider } from 'react-redux'
 import Login from './Components/Login'
+import LogoutRedirect from './Components/LogoutRedirect'
 import Register from './Components/Register'
 
 
@@ -22,6 +23,7 @@ ReactDOM.render(
                 <Route exact path="/" component = {App} />
                 <Route path="/register" component = {Register} />
                 <Route path="/login" component = {Login} />
+                <Route path="/logout" component = {LogoutRedirect} />
             </Switch>
         </BaseLayout>
     </BrowserRouter>

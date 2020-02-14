@@ -1,13 +1,22 @@
 import React from 'react';
 import { connect } from 'react-redux'
-import LogoutMenu from './LogoutM'
+import LogoutM from './LogoutM'
+import LoginM from './LoginM'
 
-const Menu = () => {
-    return (
-        <div>
-            <LogoutMenu />
-        </div>
-    )
+const Menu = (props) => {
+    const isLoggedIn = props.isLoggedIn
+    if (isLoggedIn) {
+        return <LoginM />
+    }
+    else {
+        return <LogoutM />
+    }
 }
 
-export default Menu
+const mapStateToProps = (state) => {
+    return {
+        isLoggedIn: state.isAuth
+    }
+}
+
+export default connect(mapStateToProps) (Menu)

@@ -1,8 +1,9 @@
 import React from 'react'
 import { connect } from 'react-redux'
 import { useState } from 'react'
+import { withRouter } from 'react-router-dom'
 
-const Login = () => {
+const Login = (props) => {
     const [user, setUser] = useState({})
     const [error, setError] = useState(1)
 
@@ -28,7 +29,8 @@ const Login = () => {
         .then(response => response.json())
         .then(auth => {
             if (auth.isAuthenticated) {
-                // Redux here
+                props.onLogin()
+                props.history.push('/')
             }
             else {
                 setError({
@@ -51,4 +53,11 @@ const Login = () => {
     )
 }
 
-export default Login
+const mapDispatchToProps = (dispatch) => {
+    return {
+        onLogin: () => dispatch({ type: 'LOGIN'}),
+        onLogout: () => dispatch({ type: 'LOGOUT'})
+    }
+}
+
+export default connect(null, mapDispatchToProps) (withRouter(Login))
