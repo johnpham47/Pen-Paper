@@ -2,6 +2,7 @@ import React from 'react'
 import { connect } from 'react-redux'
 import { useState } from 'react'
 import { withRouter } from 'react-router-dom'
+import { setAuthenticationHeader } from '../utils/authentication'
 
 const Login = (props) => {
     const [user, setUser] = useState({})
@@ -27,8 +28,12 @@ const Login = (props) => {
             })
         })
         .then(response => response.json())
-        .then(auth => {
-            if (auth.isAuthenticated) {
+        .then(json => {
+            const token = json.token
+            localStorage.setItem('jsonwebtoken', token)
+            setAuthenticationHeader(token)
+
+            if (json.isAuthenticated) {
                 props.onLogin()
                 props.history.push('/')
             }
@@ -47,7 +52,7 @@ const Login = (props) => {
             <label>Username</label>
             <input onChange={handleInput} type="text" name="username" />
             <label>Password</label>
-            <input onChange={handleInput} type="text" name="password" />
+            <input onChange={handleInput} type="password" name="password" />
             <button onClick={handleLogin}>Login</button>
         </div>
     )

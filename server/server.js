@@ -2,6 +2,7 @@ const express = require('express')
 const app = express(); 
 const PORT = process.env.PORT || 8080
 const cors = require('cors')
+const jwt = require('jsonwebtoken')
 const models = require('./models')
 const bcrypt = require('bcrypt')
 const SALT_ROUNDS = 10
@@ -49,7 +50,9 @@ app.post('/login', (req, res) => {
             bcrypt.compare(password, user.password)
             .then((passwordMatch) => {
                 if (passwordMatch) {
-                    res.json({isAuthenticated: true})
+                    const token = jwt.sign({username: passwordMatch.username}, 'SOMESECRETKEY')
+                    console.log(token)
+                    res.json({isAuthenticated: true, token: token})
                 }
                 else {
                     res.json({isAuthenticated: false})

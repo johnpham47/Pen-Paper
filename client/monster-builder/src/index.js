@@ -11,6 +11,8 @@ import { Provider } from 'react-redux'
 import Login from './Components/Login'
 import LogoutRedirect from './Components/LogoutRedirect'
 import Register from './Components/Register'
+import Monsters from './Components/Monsters'
+import requireAuth from './Components/Auth/requireAuth'
 
 
 const store = createStore(reducer, window.__REDUX_DEVTOOLS_EXTENSION__ && window.__REDUX_DEVTOOLS_EXTENSION__())
@@ -24,6 +26,7 @@ ReactDOM.render(
                 <Route path="/register" component = {Register} />
                 <Route path="/login" component = {Login} />
                 <Route path="/logout" component = {LogoutRedirect} />
+                <Route path="/monsters" component = {requireAuth(Monsters)} />
             </Switch>
         </BaseLayout>
     </BrowserRouter>
