@@ -1,0 +1,14 @@
+.navbar {
+    display: grid;
+    grid-auto-flow: column;
+    gap: 20px;
+    padding-left: 30
+}
+
+.logo {
+
+}
+
+ul {
+    list-style-type: none
+}

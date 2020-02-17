@@ -15,7 +15,7 @@ app.post('/register', (req, res) => {
     let username = req.body.username
     let password = req.body.password
 
-    models.Users.findOne({
+    models.User.findOne({
         where: {
             username: username
         }
@@ -27,7 +27,7 @@ app.post('/register', (req, res) => {
         else {
             bcrypt.hash(password, SALT_ROUNDS)
             .then(hash => {
-                models.Users.create({
+                models.User.create({
                     username: username,
                     password: hash
                 })
@@ -41,7 +41,7 @@ app.post('/login', (req, res) => {
     let username = req.body.username
     let password = req.body.password
 
-    models.Users.findOne({
+    models.User.findOne({
         where: {
             username: username
         }
@@ -52,6 +52,10 @@ app.post('/login', (req, res) => {
                 if (passwordMatch) {
                     const token = jwt.sign({username: passwordMatch.username}, 'SOMESECRETKEY')
                     console.log(token)
+                    models.Note.findOne({
+                        where: {
+                            userId: 1
+                    }}).then(note => console.log(note))
                     res.json({isAuthenticated: true, token: token})
                 }
                 else {
