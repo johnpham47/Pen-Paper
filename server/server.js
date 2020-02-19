@@ -5,10 +5,19 @@ const cors = require('cors')
 const jwt = require('jsonwebtoken')
 const models = require('./models')
 const bcrypt = require('bcrypt')
+const session = require('express-session')
 const SALT_ROUNDS = 10
 
+app.use(express.urlencoded({ extended: false }))
 app.use(express.json())
 app.use(cors())
+app.use(
+    session({
+        secret: 'SEEEECRET',
+        resave: false,
+        saveUninitialized: true
+    })
+);
 
 app.post('/register', (req, res) => {
     console.log("Registering user...")
@@ -49,13 +58,9 @@ app.post('/login', (req, res) => {
         if (user) {
             bcrypt.compare(password, user.password)
             .then((passwordMatch) => {
+                req.session.userId = user.id
                 if (passwordMatch) {
                     const token = jwt.sign({username: passwordMatch.username}, 'SOMESECRETKEY')
-                    console.log(token)
-                    models.Note.findOne({
-                        where: {
-                            userId: 1
-                    }}).then(note => console.log(note))
                     res.json({isAuthenticated: true, token: token})
                 }
                 else {
@@ -67,6 +72,12 @@ app.post('/login', (req, res) => {
             res.json({isAuthenticated: false})
         }
     })
+})
+
+app.post('/logout', (req, res) => {
+    if (req.session) {
+        req.session.destroy();
+    }
 })
 
 app.listen(PORT, () => {
