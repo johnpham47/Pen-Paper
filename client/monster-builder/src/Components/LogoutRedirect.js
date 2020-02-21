@@ -5,7 +5,6 @@ import axios from 'axios'
 
 const LogoutRedirect = (props) => {
     useEffect(() => {
-        axios.post('http://localhost:8080/logout')
         props.handleLogout()
         localStorage.removeItem('jsonwebtoken')
         props.history.push('/login')

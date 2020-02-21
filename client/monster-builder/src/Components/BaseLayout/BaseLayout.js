@@ -1,7 +1,7 @@
 import React from 'react';
 import Menu from '../BaseLayout/Menu/Menu'
 import Footer from '../BaseLayout/Footer'
-// import '../../public/css/Base.css'
+import '../../public/css/Base.css'
 
 const BaseLayout = (props) => {
     return (

@@ -22,6 +22,7 @@ const Login = (props) => {
             headers: {
                 'Content-Type': 'application/json'
             },
+            credentials: 'include',
             body: JSON.stringify({
                 username: user.username,
                 password: user.password
@@ -32,6 +33,7 @@ const Login = (props) => {
             const token = json.token
             localStorage.setItem('jsonwebtoken', token)
             setAuthenticationHeader(token)
+            console.log(token)
 
             if (json.isAuthenticated) {
                 props.onLogin()

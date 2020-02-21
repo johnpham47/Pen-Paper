@@ -6,11 +6,12 @@ const jwt = require('jsonwebtoken')
 const models = require('./models')
 const bcrypt = require('bcrypt')
 const session = require('express-session')
+const authentication = require('./middlewares/authentication')
 const SALT_ROUNDS = 10
 
 app.use(express.urlencoded({ extended: false }))
 app.use(express.json())
-app.use(cors())
+app.use(cors({credentials: true, origin: true}))
 app.use(
     session({
         secret: 'SEEEECRET',
@@ -58,9 +59,13 @@ app.post('/login', (req, res) => {
         if (user) {
             bcrypt.compare(password, user.password)
             .then((passwordMatch) => {
-                req.session.userId = user.id
+                // req.session.userId = user.id
+                // req.session.save()
+                // console.log(req.session)
                 if (passwordMatch) {
-                    const token = jwt.sign({username: passwordMatch.username}, 'SOMESECRETKEY')
+                    console.log(user.id)
+                    let payload = {userId: user.id, username: user.username}
+                    const token = jwt.sign(payload, 'SOMESECRETKEY')
                     res.json({isAuthenticated: true, token: token})
                 }
                 else {
@@ -74,11 +79,63 @@ app.post('/login', (req, res) => {
     })
 })
 
-app.post('/logout', (req, res) => {
-    if (req.session) {
-        req.session.destroy();
-    }
+app.post('/updateNote', (req, res) => {
+    let noteId = req.body.noteId
+    let title = req.body.title
+    let body = req.body.body
+
+    models.Note.update({
+        title: title,
+        body: body
+    }, {
+        where: {
+            id: noteId
+        }
+    }).then((updatedNote) => {
+        res.status(200).send("Update success")
+    })
 })
+
+app.post('/addNote', authentication, (req, res) => {
+    console.log(req.session.userId)
+    let title = req.body.title
+    let body = req.body.body
+    
+    models.Note.create({
+        title: title,
+        body: body,
+        userId: req.session.userId
+    }).then((newNote) => {
+        res.json({newNote: newNote.dataValues})
+    }
+    )
+})
+
+app.post('/deleteNote', (req, res) => {
+    console.log("Deleting note")
+    let noteId = req.body.noteId
+    models.Note.destroy({
+        where: {
+            id: noteId
+        }
+    })
+})
+
+app.get('/get-notes', (req, res) => {
+        console.log(req.session.userId)
+        // Find only by userId later
+        models.Note.findAll({
+            where: {
+                userId: 1
+            }
+        })
+        .then(note => {
+            res.json({
+                notes: note
+            })
+        })
+    }
+)
 
 app.listen(PORT, () => {
     console.log("Server is listening...")

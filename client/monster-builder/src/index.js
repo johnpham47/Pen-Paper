@@ -11,7 +11,7 @@ import { Provider } from 'react-redux'
 import Login from './Components/Login'
 import LogoutRedirect from './Components/LogoutRedirect'
 import Register from './Components/Register'
-import Monsters from './Components/Monsters'
+import Notes from './Components/Notes/Notes'
 import requireAuth from './Components/Auth/requireAuth'
 
 
@@ -26,7 +26,7 @@ ReactDOM.render(
                 <Route path="/register" component = {Register} />
                 <Route path="/login" component = {Login} />
                 <Route path="/logout" component = {LogoutRedirect} />
-                <Route path="/monsters" component = {requireAuth(Monsters)} />
+                <Route path="/monsters" component = {requireAuth(Notes)} />
             </Switch>
         </BaseLayout>
     </BrowserRouter>
