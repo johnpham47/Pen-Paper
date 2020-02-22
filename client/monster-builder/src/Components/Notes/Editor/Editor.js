@@ -41,6 +41,12 @@ class Editor extends Component {
 
         return(
             <div className={classes.editorContainer}>
+                <input
+                    className={classes.titleInput}
+                    placeholder='Note title...'
+                    value={this.state.title ? this.state.title : ''}
+                    onChange={(e) => this.updateTitle(e.target.value)}>
+                </input>
                 <ReactQuill
                 value={this.state.text}
                 onChange={this.updateBody}>
@@ -53,6 +59,12 @@ class Editor extends Component {
         await this.setState({ text: val});
         this.update();
     }
+
+    updateTitle = async (txt) => {
+        await this.setState({ title: txt });
+        this.update();
+    }
+    
     update = debounce(() => {
         console.log("User is udpati")
         this.props.noteUpdate(this.state.id, {
