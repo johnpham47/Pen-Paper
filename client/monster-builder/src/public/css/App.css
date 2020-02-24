@@ -5,4 +5,5 @@ body {
 .container {
   display: grid;
   grid-template-rows: 1fr 9fr 1fr;
+  overflow-y: hidden;
 }

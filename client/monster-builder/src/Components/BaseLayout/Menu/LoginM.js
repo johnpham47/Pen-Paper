@@ -7,20 +7,10 @@ import Button from '@material-ui/core/Button'
 import LinkMUI from '@material-ui/core/Link'
 import { withStyles } from '@material-ui/core/styles'
 import styles from './Styling/LoginS'
-// import '../../../public/css/Menu.css'
 
 const LoginM = (props) => {
     const {classes} = props
     return (
-        // <div className="navbar">
-        //     <div className="logo">Logo</div>
-        //     <ul className="nav-items">
-        //         <li><Link to='/'>Home</Link></li>
-        //         <li><Link to='/create'>Create</Link></li>
-        //         <li><Link to='/monsters'>Monsters</Link></li>
-        //         <li><Link to='/logout'>Logout</Link></li>
-        //     </ul>
-        // </div>
         <div>
             <AppBar className={classes.nav}>
                 <Toolbar>

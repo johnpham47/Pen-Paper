@@ -8,9 +8,9 @@ import {BrowserRouter, Route, Switch} from 'react-router-dom';
 import reducer from './store/reducer'
 import { createStore } from 'redux'
 import { Provider } from 'react-redux'
-import Login from './Components/Login'
-import LogoutRedirect from './Components/LogoutRedirect'
-import Register from './Components/Register'
+import Login from './Components/Login-Logout-Reg/Login/Login'
+import LogoutRedirect from './Components/Login-Logout-Reg/LogoutRedirect'
+import Register from './Components/Login-Logout-Reg/Registration/Register'
 import Notes from './Components/Notes/Notes'
 import requireAuth from './Components/Auth/requireAuth'
 

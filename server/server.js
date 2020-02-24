@@ -31,7 +31,7 @@ app.post('/register', (req, res) => {
         }
     }).then(user => {
         if (user) { 
-            res.status(500).json({message: "Username already exists"})
+            res.json({error: true})
         }
 
         else {
